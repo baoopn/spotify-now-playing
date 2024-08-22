@@ -9,12 +9,21 @@ const SpotifyNowPlaying = () => {
 	const [track, setTrack] = useState({});
 
 	useEffect(() => {
-		Promise.all([
-			getNowPlayingItem(),
-		]).then((results) => {
-			setTrack(results[0]);
+		const fetchNowPlaying = async () => {
+			const nowPlaying = await getNowPlayingItem();
+			setTrack(nowPlaying);
 			setLoading(false);
-		});
+		};
+
+		(async () => {
+			await fetchNowPlaying();
+		})();
+
+		const interval = setInterval(() => {
+			fetchNowPlaying().catch(console.error);
+		}, 2000); // Poll every 2 seconds
+
+		return () => clearInterval(interval);
 	}, []);
 
 	return (

@@ -8,11 +8,22 @@ const SpotifyRecentTracks = () => {
 	const [tracks, setTracks] = useState([]);
 
 	useEffect(() => {
-		Promise.all([getRecentlyPlayedTracks()]).then(([tracksResult]) => {
-			setTracks(tracksResult || []);
-			setLoading(false);
-		});
-	}, []);
+	const fetchRecentlyPlayedTracks = async () => {
+		const tracksResult = await getRecentlyPlayedTracks();
+		setTracks(tracksResult || []);
+		setLoading(false);
+	};
+
+	(async () => {
+		await fetchRecentlyPlayedTracks();
+	})();
+
+	const interval = setInterval(() => {
+		fetchRecentlyPlayedTracks().catch(console.error);
+	}, 60000); // Poll every 1 minute
+
+	return () => clearInterval(interval);
+}, []);
 
 
 	return(

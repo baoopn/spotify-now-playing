@@ -21,7 +21,7 @@ const SpotifyNowPlaying = () => {
 
 		const interval = setInterval(() => {
 			fetchNowPlaying().catch(console.error);
-		}, 2000); // Poll every 2 seconds
+		}, 1000); // Poll every 1 seconds
 
 		return () => clearInterval(interval);
 	}, []);

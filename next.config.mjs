@@ -3,7 +3,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	// Ensure pages are statically generated.
 	// Avoid getServerSideProps or other SSR-specific features.
-	output: 'standalone',
+	output: 'serverless',
 
 	env: {
 		REACT_APP_SPOTIFY_CLIENT_ID: process.env.REACT_APP_SPOTIFY_CLIENT_ID,

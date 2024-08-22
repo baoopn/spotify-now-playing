@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./page.module.css";
 import {Box, ChakraProvider, Flex, Text, Link} from "@chakra-ui/react";
 import {ColorModeSwitcher} from "@/app/ColorModeSwitcher";
 import SpotifyNowPlaying from "@/spotify/SpotifyNowPlaying";

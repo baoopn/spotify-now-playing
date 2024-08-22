@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	reactStrictMode: true,
+	// Ensure pages are statically generated.
+	// Avoid getServerSideProps or other SSR-specific features.
+	output: 'standalone',
+
 	env: {
 		REACT_APP_SPOTIFY_CLIENT_ID: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 		REACT_APP_SPOTIFY_CLIENT_SECRET: process.env.REACT_APP_SPOTIFY_CLIENT_SECRET,
@@ -14,6 +19,8 @@ const nextConfig = {
 				pathname: '/**',
 			},
 		],
+		loader: 'imgix', // or 'cloudinary', 'akamai', etc.
+		path: '',
 	},
 };
 

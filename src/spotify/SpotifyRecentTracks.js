@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {getRecentlyPlayedTracks} from "@/spotify/SpotifyAPI";
-import {Box, Link, Spinner, Stack, Text, Image} from "@chakra-ui/react";
+import {Box, Link, Spinner, Stack, Text, Image, Tooltip} from "@chakra-ui/react";
 import SpotifyLogo from "@/spotify/SpotifyLogo";
 
 const SpotifyRecentTracks = () => {
@@ -49,22 +49,27 @@ const SpotifyRecentTracks = () => {
 									borderRadius="sm"
 								/>
 								<Stack spacing={0} overflow="hidden">
-									<Link href={track.songUrl} target="_blank">
+									<Tooltip label={track.title} hasArrow>
+										<Link href={track.songUrl} alignSelf="self-start" isExternal>
+											<Text
+												fontWeight="semibold"
+												width="full"
+												isTruncated
+												color="alph"
+											>
+												{track.title}
+											</Text>
+										</Link>
+									</Tooltip>
+									<Tooltip label={track.artist} hasArrow>
 										<Text
-											fontWeight="semibold"
-											width="full"
+											color="gray.500"
 											isTruncated
-											color="alph"
+											alignSelf="self-start"
 										>
-											{track.title}
+											{track.artist}
 										</Text>
-									</Link>
-									<Text
-										color="gray.500"
-										isTruncated
-									>
-										{track.artist}
-									</Text>
+									</Tooltip>
 									<Text></Text>
 								</Stack>
 							</Stack>

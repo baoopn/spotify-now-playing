@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Spotify Now Playing and Recent Tracks
+
+This is a Next.js project that displays the currently playing track on Spotify as well as a list of recently played tracks. It uses the Spotify Web API to fetch the data and is inspired by [Lee Robinson's tutorial](https://leerob.io/blog/spotify-api-nextjs).
+
+## Features
+
+- **Now Playing**: Shows the track you're currently listening to on Spotify.
+- **Recently Played**: Displays a list of your recently played tracks.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Before you begin, ensure you have the following:
+
+- [Node.js](https://nodejs.org/) installed.
+- A [Spotify Developer Account](https://developer.spotify.com/dashboard/applications) to create an app and get API credentials.
+
+### Installation
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/baoopn/spotify-now-playing.git
+cd spotify-now-playing
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+### Setting Up the Spotify API
+
+To use the Spotify API, you’ll need to obtain the following credentials:
+
+- **Client ID**
+- **Client Secret**
+- **Refresh Token**
+
+Follow the instructions in [this guide](https://leerob.io/blog/spotify-api-nextjs) to generate your refresh token and understand how to authenticate your Spotify API requests.
+
+### Environment Variables
+
+Create a `.env.local` file in the root of your project and add the following variables:
+
+```bash
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+SPOTIFY_REFRESH_TOKEN=your_spotify_refresh_token
+```
+
+### Configuration for Cloudflare Pages Deployment
+
+This project is configured to be deployed on Cloudflare Pages using the `@cloudflare/next-on-pages` dependency. The deployment-specific settings are defined in the `next.config.mjs` file.
+
+To ensure compatibility with Cloudflare Pages:
+
+- The `next.config.mjs` includes settings to optimize static builds.
+- The `@cloudflare/next-on-pages` package is used to handle the build process tailored for Cloudflare’s infrastructure.
+
+### Running the Project
+
+To start the development server, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+For deployment, consider using platforms like [Vercel](https://vercel.com/), [Netlify](https://www.netlify.com/) or [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/). These platforms offer seamless integration with Next.js and handle environment variables securely.
 
-## Learn More
+## References
 
-To learn more about Next.js, take a look at the following resources:
+This project is based on [Lee Robinson’s tutorial on using the Spotify API in Next.js](https://leerob.io/blog/spotify-api-nextjs). You can check out the detailed guide there to learn more about how the Spotify API works and how to handle authentication.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Feel free to customize the content further based on your project's specifics. If you have any questions or need further assistance, please let me know! 🚀

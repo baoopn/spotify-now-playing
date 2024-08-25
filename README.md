@@ -74,6 +74,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 For deployment, consider using platforms like [Vercel](https://vercel.com/), [Netlify](https://www.netlify.com/) or [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/). These platforms offer seamless integration with Next.js and handle environment variables securely.
 
+## Note
+
+I do ***NOT*** recommend building this Next App with the .env and deploying the static build, as your tokens may be included in one of the built JavaScript files. It’s better to handle token management on the server side for security reasons.
+
 ## References
 
 This project is based on [Lee Robinson’s tutorial on using the Spotify API in Next.js](https://leerob.io/blog/spotify-api-nextjs). You can check out the detailed guide there to learn more about how the Spotify API works and how to handle authentication.

@@ -100,6 +100,7 @@ async function getNowPlayingItem() {
         title: song.item.name,
         progress: song.progress_ms,
         duration: song.item.duration_ms,
+        id: song.item.id,
     };
 }
 

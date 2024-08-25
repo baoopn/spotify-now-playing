@@ -5,6 +5,7 @@ import {ColorModeSwitcher} from "@/app/ColorModeSwitcher";
 import SpotifyNowPlaying from "@/spotify/SpotifyNowPlaying";
 import SpotifyRecentTracks from "@/spotify/SpotifyRecentTracks";
 import React from 'react';
+import '@/app/globals.css';
 
 require('dotenv').config();
 
@@ -13,7 +14,7 @@ export default function Home() {
     <React.StrictMode>
       <ChakraProvider>
         <Box textAlign="right" p={3}>
-          <ColorModeSwitcher initialColorMode="dark" />
+          <ColorModeSwitcher />
         </Box>
 
         <Flex direction="column" justifyContent="center" align="center" minHeight="90vh" mb={6}>

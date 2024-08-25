@@ -1,0 +1,14 @@
+services:
+  spotify-playing-nextjs:
+    image: spotify-playing-nextjs:1.0.0  # Replace 1.0.0 with your desired version
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3011:3000"  # Map port 3011 on the host to port 3000 in the container
+    restart: always
+    environment:
+      NODE_ENV: production
+      REACT_APP_SPOTIFY_CLIENT_ID: ${REACT_APP_SPOTIFY_CLIENT_ID}
+      REACT_APP_SPOTIFY_CLIENT_SECRET: ${REACT_APP_SPOTIFY_CLIENT_SECRET}
+      REACT_APP_SPOTIFY_REFRESH_TOKEN: ${REACT_APP_SPOTIFY_REFRESH_TOKEN}

@@ -8,23 +8,24 @@ const SpotifyNowPlaying = () => {
 	const [loading, setLoading] = useState(true);
 	const [track, setTrack] = useState({});
 
-	useEffect(() => {
-		const fetchNowPlaying = async () => {
-			const nowPlaying = await getNowPlayingItem();
-			setTrack(nowPlaying);
-			setLoading(false);
-		};
-
-		(async () => {
-			await fetchNowPlaying();
-		})();
-
-		const interval = setInterval(() => {
-			fetchNowPlaying().catch(console.error);
-		}, 1000); // Poll every 1 seconds
-
-		return () => clearInterval(interval);
-	}, []);
+		useEffect(() => {
+			const fetchNowPlaying = async () => {
+					const nowPlaying = await getNowPlayingItem();
+					setTrack(nowPlaying);
+					setLoading(false);
+	
+					// Set up the next fetch using setTimeout
+					setTimeout(fetchNowPlaying, 1000); // Poll every 1 second
+			};
+	
+			(async () => {
+					await fetchNowPlaying();
+			})();
+	
+			return () => {
+					// No need to clear setTimeout as it will stop automatically when the component unmounts
+			};
+		}, []);
 
 	return (
 		<Box width="xs">
@@ -39,6 +40,27 @@ const SpotifyNowPlaying = () => {
 						<Text fontWeight="semibold">{track.isPlaying ? 'Now Playing' : 'Currently Offline'}</Text>
 						{track.isPlaying && <PlayingAnimation/>}
 					</Stack>
+					{!track.isPlaying && 
+            <Box p={4} borderRadius="lg" borderWidth={1}>
+							<Stack direction="column" spacing={1} align="center">
+								<Image
+									src={`https://cdn.baoopn.com/data/img/Baoo.png`}
+									alt={`Bao's Image`}
+									width={72}
+									height={72}
+									borderRadius="md"
+								/>
+								<Text
+									fontWeight="semibold"
+									fontSize="lg"
+									width="full"
+									color="alph"
+								>
+									Bao isn&apos;t listening to anything right now.
+								</Text>
+							</Stack>
+            </Box>
+					}
 					{track.isPlaying &&
 						<Box p={4} borderRadius="lg" borderWidth={1}>
 							<Stack direction="column" spacing={4} align="center">

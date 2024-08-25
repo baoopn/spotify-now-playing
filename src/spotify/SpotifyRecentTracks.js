@@ -7,23 +7,24 @@ const SpotifyRecentTracks = () => {
 	const [loading, setLoading] = useState(true);
 	const [tracks, setTracks] = useState([]);
 
-	useEffect(() => {
-	const fetchRecentlyPlayedTracks = async () => {
-		const tracksResult = await getRecentlyPlayedTracks();
-		setTracks(tracksResult || []);
-		setLoading(false);
-	};
-
-	(async () => {
-		await fetchRecentlyPlayedTracks();
-	})();
-
-	const interval = setInterval(() => {
-		fetchRecentlyPlayedTracks().catch(console.error);
-	}, 60000); // Poll every 1 minute
-
-	return () => clearInterval(interval);
-}, []);
+		useEffect(() => {
+			const fetchRecentlyPlayedTracks = async () => {
+					const tracksResult = await getRecentlyPlayedTracks();
+					setTracks(tracksResult || []);
+					setLoading(false);
+	
+					// Set up the next fetch using setTimeout
+					setTimeout(fetchRecentlyPlayedTracks, 10000); // Poll every 10 seconds
+			};
+	
+			(async () => {
+					await fetchRecentlyPlayedTracks();
+			})();
+	
+			return () => {
+					// No need to clear setTimeout as it will stop automatically when the component unmounts
+			};
+	}, []);
 
 
 	return(

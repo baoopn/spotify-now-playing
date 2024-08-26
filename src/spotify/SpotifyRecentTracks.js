@@ -1,30 +1,57 @@
 import {useEffect, useState} from "react";
-import {getRecentlyPlayedTracks} from "@/spotify/SpotifyAPI";
+// import {getRecentlyPlayedTracks} from "@/spotify/SpotifyAPI";
 import {Box, Link, Spinner, Stack, Text, Image, Tooltip} from "@chakra-ui/react";
 import SpotifyLogo from "@/spotify/SpotifyLogo";
+import {RECENTLY_PLAYED_ENDPOINT} from "@/spotify/Constants";
 
 const SpotifyRecentTracks = () => {
 	const [loading, setLoading] = useState(true);
 	const [tracks, setTracks] = useState([]);
 
+		// useEffect(() => {
+		// 	const fetchRecentlyPlayedTracks = async () => {
+		// 			const tracksResult = await getRecentlyPlayedTracks();
+		// 			setTracks(tracksResult || []);
+		// 			setLoading(false);
+	
+		// 			// Set up the next fetch using setTimeout
+		// 			setTimeout(fetchRecentlyPlayedTracks, 10000); // Poll every 10 seconds
+		// 	};
+	
+		// 	(async () => {
+		// 			await fetchRecentlyPlayedTracks();
+		// 	})();
+	
+		// 	return () => {
+		// 			// No need to clear setTimeout as it will stop automatically when the component unmounts
+		// 	};
+		// }, []);
+
 		useEffect(() => {
-			const fetchRecentlyPlayedTracks = async () => {
-					const tracksResult = await getRecentlyPlayedTracks();
-					setTracks(tracksResult || []);
-					setLoading(false);
-	
-					// Set up the next fetch using setTimeout
-					setTimeout(fetchRecentlyPlayedTracks, 10000); // Poll every 10 seconds
-			};
-	
-			(async () => {
-					await fetchRecentlyPlayedTracks();
-			})();
-	
-			return () => {
-					// No need to clear setTimeout as it will stop automatically when the component unmounts
-			};
-	}, []);
+    const fetchRecentTracks = () => {
+      fetch(RECENTLY_PLAYED_ENDPOINT)
+        .then(response => response.json())
+        .then(results => {
+          setTracks(results);
+          setLoading(false);
+          // Fetch again after the previous fetch is finished
+          setTimeout(fetchRecentTracks, 10000);
+        })
+        .catch(error => {
+          console.error('Error fetching recently played tracks:', error);
+          // Retry after 2 seconds if there is an error
+          setTimeout(fetchRecentTracks, 2000);
+        });
+    };
+
+    // Fetch immediately
+    fetchRecentTracks();
+
+    // Clean up function to stop fetching if the component unmounts
+    return () => {
+      // No need to clear interval as we are using setTimeout
+    };
+  }, []);
 
 
 	return(

@@ -2,30 +2,58 @@ import {useEffect, useState} from "react";
 import {Box, Spinner, Stack, Text, Link, Progress, Image, Tooltip} from "@chakra-ui/react";
 import SpotifyLogo from "@/spotify/SpotifyLogo";
 import PlayingAnimation from "@/spotify/PlayingAnimation";
-import {getNowPlayingItem} from "@/spotify/SpotifyAPI";
+// import {getNowPlayingItem} from "@/spotify/SpotifyAPI";
+import { CURRENTLY_PLAYING_ENDPOINT } from "@/spotify/Constants";
 
 const SpotifyNowPlaying = () => {
 	const [loading, setLoading] = useState(true);
 	const [track, setTrack] = useState({});
 
-		useEffect(() => {
-			const fetchNowPlaying = async () => {
-					const nowPlaying = await getNowPlayingItem();
-					setTrack(nowPlaying);
-					setLoading(false);
+		// useEffect(() => {
+		// 	const fetchNowPlaying = async () => {
+		// 			const nowPlaying = await getNowPlayingItem();
+		// 			setTrack(nowPlaying);
+		// 			setLoading(false);
 	
-					// Set up the next fetch using setTimeout
-					setTimeout(fetchNowPlaying, 1000); // Poll every 1 second
-			};
+		// 			// Set up the next fetch using setTimeout
+		// 			setTimeout(fetchNowPlaying, 1000); // Poll every 1 second
+		// 	};
 	
-			(async () => {
-					await fetchNowPlaying();
-			})();
+		// 	(async () => {
+		// 			await fetchNowPlaying();
+		// 	})();
 	
-			return () => {
-					// No need to clear setTimeout as it will stop automatically when the component unmounts
-			};
-		}, []);
+		// 	return () => {
+		// 			// No need to clear setTimeout as it will stop automatically when the component unmounts
+		// 	};
+		// }, []);
+
+		// useEffect hook to fetch the currently playing item at regular intervals
+    useEffect(() => {
+    const fetchCurrentlyPlaying = () => {
+      fetch(CURRENTLY_PLAYING_ENDPOINT)
+        .then(response => response.json())
+        .then(track => {
+          setTrack(track);
+          setLoading(false);
+          // Fetch again after the previous fetch is finished
+          setTimeout(fetchCurrentlyPlaying, 1000);
+        })
+        .catch(error => {
+          console.error('Error fetching currently playing track:', error);
+          // Retry after 2 seconds if there is an error
+          setTimeout(fetchCurrentlyPlaying, 2000);
+        });
+    };
+  
+    // Fetch immediately
+    fetchCurrentlyPlaying();
+  
+    // Clean up function to stop fetching if the component unmounts
+    return () => {
+      // No need to clear interval as we are using setTimeout
+    };
+  }, []);
 
 	return (
 		<Box width="xs">
@@ -103,7 +131,7 @@ const SpotifyNowPlaying = () => {
 										size="xs"
 										colorScheme="green"
 										borderRadius="md"
-										value={(track.progress / track.duration) * 100}
+										value={(track.progress_ms / track.duration_ms) * 100}
 									/>
 								</Stack>
 							</Stack>
